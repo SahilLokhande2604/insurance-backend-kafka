@@ -1,0 +1,13 @@
+package notification_service.repositories;
+
+import notification_service.models.Notification;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
+    // Custom query to find all notifications for a specific user
+    List<Notification> findByUserId(Long userId);
+}

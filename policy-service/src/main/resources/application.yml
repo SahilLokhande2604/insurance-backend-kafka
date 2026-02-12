@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: policy-service
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/policy_service_db
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8183
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

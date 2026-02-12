@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/insurance_management_notifications
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8087
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
