@@ -6,6 +6,29 @@ public class User {
     private String mobileNumber;
     private String documentType;
     private String documentId;
+    private String username;
+	
+    
+	public User() {
+		super();
+	}
+
+	public User(Long id, String email, String mobileNumber, String documentType, String documentId, String username) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.mobileNumber = mobileNumber;
+		this.documentType = documentType;
+		this.documentId = documentId;
+		this.username = username;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getDocumentType() {
 		return documentType;

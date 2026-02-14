@@ -38,6 +38,4 @@ public class UserPolicyRequest {
 		this.paymentId = paymentId;
 	}
 
-    // Getters and Setters
-    
 }

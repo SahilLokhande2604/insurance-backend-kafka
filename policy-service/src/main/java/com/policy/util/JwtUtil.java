@@ -1,6 +1,5 @@
 package com.policy.util;
 
-import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;

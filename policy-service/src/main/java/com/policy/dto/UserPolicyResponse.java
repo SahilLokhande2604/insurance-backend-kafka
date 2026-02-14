@@ -73,5 +73,4 @@ public class UserPolicyResponse {
 		this.expiryDate = expiryDate;
 	}
 
-    // Getters and Setters
 }
