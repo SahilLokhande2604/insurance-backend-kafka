@@ -1,4 +1,4 @@
-package notification_service;
+package notification_service.services;
 
 import notification_service.models.Notification;
 import notification_service.repositories.NotificationRepository;

@@ -1,7 +1,7 @@
 package notification_service.controllers;
 
 import notification_service.models.Notification;
-import notification_service.NotificationService;
+import notification_service.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

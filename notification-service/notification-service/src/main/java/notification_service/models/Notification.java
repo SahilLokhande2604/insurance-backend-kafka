@@ -27,6 +27,19 @@ public class Notification {
 
     private String status;
 
+	public Notification() {
+		super();
+	}
+
+	public Notification(Long id, Long userId, String message, String type, String status) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.message = message;
+		this.type = type;
+		this.status = status;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -67,18 +80,6 @@ public class Notification {
 		this.status = status;
 	}
 
-	public Notification() {
-		super();
-	}
-
-	public Notification(Long id, Long userId, String message, String type, String status) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.message = message;
-		this.type = type;
-		this.status = status;
-	} 
-    
-    
+	
+	
 }
