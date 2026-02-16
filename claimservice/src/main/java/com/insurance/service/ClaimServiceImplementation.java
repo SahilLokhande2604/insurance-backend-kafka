@@ -12,6 +12,7 @@
 //import com.insurance.dto.Policy;
 //import com.insurance.model.Claim;
 //import com.insurance.repository.ClaimRepository;
+//import claim_service.kafka.ClaimEventProducer;
 //
 //////
 //////import java.time.LocalDate;
@@ -44,21 +45,27 @@
 //////
 //////	@Autowired
 //////	ClaimRepository claimRepository;
-//////	
+//////
 //////	@Autowired
 //////	RestTemplate restTemplate;
+//////
+//////	@Autowired
+//////	ClaimEventProducer claimEventProducer;
 //////	
 //////	@Override
 //////	public Claim addClaim(Claim request) {
-//////		// TODO Auto-generated method stub
-//////		return claimRepository.save(request);
+//////		Claim saved = claimRepository.save(request);
+//////		claimEventProducer.sendClaimSubmittedEvent("New claim submitted: ID " + saved.getId());
+//////		return saved;
 //////	}
 //////	
 //////	@Override
 //////	public  String checkClaimStatus(Long claimId) {
 //////		Optional<Claim> response = claimRepository.findById(claimId);
 //////		Claim claim = response.get();
-//////		return claim.getStatus();
+//////		String status = claim.getStatus();
+//////		claimEventProducer.sendClaimStatusEvent("Claim status changed: ID " + claimId + ", Status: " + status);
+//////		return status;
 //////	}
 //////	
 //////	@Override

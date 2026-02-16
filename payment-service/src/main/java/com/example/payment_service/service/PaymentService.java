@@ -177,6 +177,7 @@ package com.example.payment_service.service;
 import com.example.payment_service.dto.*;
 import com.example.payment_service.entity.Payment;
 import com.example.payment_service.repository.PaymentRepository;
+import payment_service.kafka.PaymentEventProducer;
 import com.razorpay.*;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.json.JSONObject;
@@ -194,16 +195,19 @@ public class PaymentService {
     private RazorpayClient razorpayClient;
     private PaymentRepository paymentRepository;
     private RestTemplate restTemplate;
+    private final PaymentEventProducer paymentEventProducer;
 
     @Value("${razorpay.secret}")
     private String secret;
 
     public PaymentService(RazorpayClient razorpayClient,
-            PaymentRepository paymentRepository) {
-this.razorpayClient = razorpayClient;
-this.paymentRepository = paymentRepository;
-this.restTemplate = new RestTemplate(); // ✅ directly initialize
-}
+            PaymentRepository paymentRepository,
+            PaymentEventProducer paymentEventProducer) {
+        this.razorpayClient = razorpayClient;
+        this.paymentRepository = paymentRepository;
+        this.paymentEventProducer = paymentEventProducer;
+        this.restTemplate = new RestTemplate();
+    }
 
     // ================= CREATE PAYMENT =================
 
@@ -264,8 +268,8 @@ this.restTemplate = new RestTemplate(); // ✅ directly initialize
             payment.setRazorpayPaymentId(request.getRazorpayPaymentId());
             payment.setStatus("SUCCESS");
             payment.setUpdatedAt(LocalDateTime.now());
-
             paymentRepository.save(payment);
+            paymentEventProducer.sendPaymentSuccessEvent("Payment successful: Payment ID " + payment.getPaymentId());
 
             // ================= CALL POLICY SERVICE =================
 
@@ -294,6 +298,7 @@ this.restTemplate = new RestTemplate(); // ✅ directly initialize
 
         } catch (Exception e) {
             e.printStackTrace();
+            paymentEventProducer.sendPaymentFailureEvent("Payment failed: " + e.getMessage());
             throw new RuntimeException("Verification Error: " + e.getMessage());
         }
     }

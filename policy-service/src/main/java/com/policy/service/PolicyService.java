@@ -1,7 +1,10 @@
 package com.policy.service;
 
+//import com.policy.kafka.PolicyEventProducer;
+
 import com.policy.model.Policy;
 import com.policy.repository.PolicyRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,16 +13,28 @@ import java.util.List;
 @Service
 public class PolicyService {
 
-    private final PolicyRepository policyRepository;
 
-    public PolicyService(PolicyRepository policyRepository) {
-        this.policyRepository = policyRepository;
-    }
+    private final PolicyRepository policyRepository;
+    
+public PolicyService(PolicyRepository policyRepository) {
+		super();
+		this.policyRepository = policyRepository;
+	}
+
+//    private final PolicyEventProducer policyEventProducer;
+    
+
+//    public PolicyService(PolicyRepository policyRepository, PolicyEventProducer policyEventProducer) {
+//        this.policyRepository = policyRepository;
+//        this.policyEventProducer = policyEventProducer;
+//    }
 
     public Policy createPolicy(Policy policy) {
         policy.setCreatedAt(LocalDateTime.now());
         policy.setUpdatedAt(LocalDateTime.now());
-        return policyRepository.save(policy);
+        Policy saved = policyRepository.save(policy);
+//        policyEventProducer.sendPolicyPurchaseEvent("New policy created: " + saved.getPolicyName() + " (ID: " + saved.getId() + ")");
+        return saved;
     }
 
     public List<Policy> getAllPolicies() {
@@ -42,7 +57,9 @@ public class PolicyService {
         policy.setDescription(updatedPolicy.getDescription());
         policy.setUpdatedAt(LocalDateTime.now());
 
-        return policyRepository.save(policy);
+        Policy saved = policyRepository.save(policy);
+//        policyEventProducer.sendPolicyUpdateEvent("Policy updated: " + saved.getPolicyName() + " (ID: " + saved.getId() + ")");
+        return saved;
     }
 
     public void deletePolicy(Long id) {

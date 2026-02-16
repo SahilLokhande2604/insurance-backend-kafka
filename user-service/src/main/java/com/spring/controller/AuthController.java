@@ -19,12 +19,16 @@ import com.spring.repo.UserRepository;
 import com.spring.util.JwtUtil;
 
 import org.springframework.web.bind.annotation.*;
+//import user_service.kafka.UserEventProducer;
 
 import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api/users")
 public class AuthController {
+
+//    @Autowired
+//    private UserEventProducer userEventProducer;
 
     @Autowired
     private UserRepository userRepository;
@@ -86,6 +90,7 @@ public class AuthController {
         newUser.setName(name);
         newUser.setPhone(phone);
         userRepository.save(newUser);
+//        userEventProducer.sendUserEvent("New user registered: " + username);
         return ResponseEntity.ok("User registered successfully");
     }
     
